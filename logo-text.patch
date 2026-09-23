@@ -1,0 +1,266 @@
+diff --git a/frontend/public/index.html b/frontend/public/index.html
+index c63b7b2..fb65c0d 100644
+--- a/frontend/public/index.html
++++ b/frontend/public/index.html
+@@ -4,13 +4,18 @@
+         <meta charset="utf-8" />
+         <meta name="viewport" content="width=device-width, initial-scale=1" />
+         <meta name="theme-color" content="#000000" />
++        <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon.png" />
++        <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
++        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+         <meta name="description" content="PNRBET — free-to-play social sportsbook & casino. Real sports and esports lines, fast-settling prediction slips, and provably-fair originals powered by free PNRcoins. No purchase necessary. 18+." />
+         <meta property="og:title" content="PNRBET — Free-to-Play Social Sportsbook & Casino" />
+         <meta property="og:description" content="Pick the action, play for free. Real sports & esports lines plus provably-fair originals, powered by free PNRcoins. No purchase necessary. 18+." />
+         <meta property="og:type" content="website" />
++        <meta property="og:image" content="https://pnrbet.com/og-image.png" />
+         <meta name="twitter:card" content="summary_large_image" />
+         <meta name="twitter:title" content="PNRBET — Free-to-Play Social Sportsbook & Casino" />
+         <meta name="twitter:description" content="Pick the action, play for free. Real sports & esports lines plus provably-fair originals. No purchase necessary. 18+." />
++        <meta name="twitter:image" content="https://pnrbet.com/og-image.png" />
+         <link rel="preconnect" href="https://fonts.googleapis.com" />
+         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet" />
+diff --git a/frontend/public/manifest.json b/frontend/public/manifest.json
+new file mode 100644
+index 0000000..5f6461c
+--- /dev/null
++++ b/frontend/public/manifest.json
+@@ -0,0 +1,32 @@
++{
++  "short_name": "PNRBET",
++  "name": "PNRBET — Free-to-Play Social Sportsbook & Casino",
++  "icons": [
++    {
++      "src": "favicon.png",
++      "sizes": "48x48",
++      "type": "image/png"
++    },
++    {
++      "src": "logo192.png",
++      "sizes": "192x192",
++      "type": "image/png",
++      "purpose": "any maskable"
++    },
++    {
++      "src": "logo512.png",
++      "sizes": "512x512",
++      "type": "image/png",
++      "purpose": "any maskable"
++    },
++    {
++      "src": "apple-touch-icon.png",
++      "sizes": "180x180",
++      "type": "image/png"
++    }
++  ],
++  "start_url": ".",
++  "display": "standalone",
++  "theme_color": "#0A0A0A",
++  "background_color": "#0A0A0A"
++}
+diff --git a/frontend/src/components/GeoGate.jsx b/frontend/src/components/GeoGate.jsx
+index c364a39..4aa0944 100644
+--- a/frontend/src/components/GeoGate.jsx
++++ b/frontend/src/components/GeoGate.jsx
+@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
+ import { Label } from "@/components/ui/label";
+ import { toast } from "sonner";
+ import { Loader2, ShieldAlert, Lock } from "lucide-react";
+-import { BasketballIcon } from "@/components/BasketballIcon";
++import logoStacked from "../assets/pnrbet-stacked.png";
+ 
+ function GeoBlock({ stateName, bannedStates, ipBanned }) {
+   const { login } = useAuth();
+@@ -41,11 +41,8 @@ function GeoBlock({ stateName, bannedStates, ipBanned }) {
+     <div className="relative flex min-h-screen flex-col items-center justify-center bg-[#0A0A0A] px-6 text-center text-white" data-testid="geo-block-screen">
+       <div className="grain" />
+       <div className="relative z-10 w-full max-w-md">
+-        <div className="mb-8 flex items-center justify-center gap-2">
+-          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#00D632]">
+-            <BasketballIcon className="h-5 w-5 text-[#0A0A0A]" strokeWidth={2.2} />
+-          </div>
+-          <span className="font-display text-xl font-extrabold tracking-tighter">PNRBET</span>
++        <div className="mb-8 flex items-center justify-center">
++          <img src={logoStacked} alt="PNRBET" className="h-16 w-auto" />
+         </div>
+ 
+         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#EF4444]/15">
+diff --git a/frontend/src/components/Navbar.jsx b/frontend/src/components/Navbar.jsx
+index c646d73..b91be6c 100644
+--- a/frontend/src/components/Navbar.jsx
++++ b/frontend/src/components/Navbar.jsx
+@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
+ import { useAuth } from "@/context/AuthContext";
+ import { Button } from "@/components/ui/button";
+ import { Wallet, Ticket, LayoutGrid, Shield, LogOut, LifeBuoy, Dices, Radio, Crown } from "lucide-react";
+-import { BasketballIcon } from "@/components/BasketballIcon";
++import logoHorizontal from "../assets/pnrbet-horizontal.png";
+ 
+ export const Navbar = () => {
+   const { user, logout, streamerMode } = useAuth();
+@@ -26,11 +26,8 @@ export const Navbar = () => {
+   return (
+     <header className="sticky top-0 z-40 border-b border-[#1F1F23] bg-[#0A0A0A]/80 text-white backdrop-blur-xl">
+       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+-        <Link to="/" className="flex items-center gap-2" data-testid="navbar-logo">
+-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#00D632]">
+-            <BasketballIcon className="h-5 w-5 text-[#0A0A0A]" strokeWidth={2.2} />
+-          </div>
+-          <span className="font-display text-lg font-extrabold tracking-tighter text-white">PNRBET</span>
++        <Link to="/" className="flex items-center" data-testid="navbar-logo">
++          <img src={logoHorizontal} alt="PNRBET" className="h-9 w-auto sm:h-10" />
+         </Link>
+ 
+         <nav className="hidden items-center gap-1 md:flex">
+diff --git a/frontend/src/pages/Landing.jsx b/frontend/src/pages/Landing.jsx
+index 8d3398b..e1f7d67 100644
+--- a/frontend/src/pages/Landing.jsx
++++ b/frontend/src/pages/Landing.jsx
+@@ -4,6 +4,8 @@ import { motion, useReducedMotion } from "framer-motion";
+ import { useAuth } from "@/context/AuthContext";
+ import { Button } from "@/components/ui/button";
+ import { ArrowRight, ShieldCheck, Gift, LineChart, CreditCard, Rocket, Dices, CircleDot, ChevronDown, Check, Bomb, Spade, Cherry, Coins, Gem, Menu, X } from "lucide-react";
++import logoHorizontal from "../assets/pnrbet-horizontal.png";
++import logoStacked from "../assets/pnrbet-stacked.png";
+ 
+ const BOARD = [
+   { league: "NBA · 4th quarter", tag: "Live", match: "Denver Nuggets vs Los Angeles", a: "DEN", ao: "-142", b: "LAL", bo: "+118" },
+@@ -74,9 +76,8 @@ export default function Landing() {
+       {/* Header */}
+       <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0A0A0A]/80 backdrop-blur-xl">
+         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
+-          <Link to="/" className="flex items-center gap-2">
+-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#00D632] font-black text-[#0A0A0A]">P</span>
+-            <span className="font-display text-lg font-black tracking-tight">PNRBET</span>
++          <Link to="/" className="flex items-center">
++            <img src={logoHorizontal} alt="PNRBET" className="h-9 w-auto sm:h-10" />
+           </Link>
+           <nav className="hidden items-center gap-8 md:flex">
+             {nav.map((n) => (
+@@ -321,10 +322,7 @@ export default function Landing() {
+       {/* Footer */}
+       <footer className="border-t border-white/10 bg-[#0C0C0E]">
+         <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-4 py-10 text-center sm:px-6">
+-          <div className="flex items-center gap-2">
+-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#00D632] font-black text-[#0A0A0A]">P</span>
+-            <span className="font-display font-black tracking-tight">PNRBET</span>
+-          </div>
++          <img src={logoStacked} alt="PNRBET" className="h-16 w-auto" />
+           <p className="max-w-xl text-xs text-[#a1a1aa]">Free-to-play social casino entertainment for eligible players 18+. No purchase necessary. Play responsibly.</p>
+           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
+             <Link to="/terms" data-testid="footer-terms-link" className="text-xs text-[#a1a1aa] underline underline-offset-2 hover:text-white">Terms of Service</Link>
+diff --git a/frontend/src/pages/Login.jsx b/frontend/src/pages/Login.jsx
+index aba7ad3..5a2a079 100644
+--- a/frontend/src/pages/Login.jsx
++++ b/frontend/src/pages/Login.jsx
+@@ -8,7 +8,8 @@ import { Input } from "@/components/ui/input";
+ import { Label } from "@/components/ui/label";
+ import { Checkbox } from "@/components/ui/checkbox";
+ import { toast } from "sonner";
+-import { BasketballIcon } from "@/components/BasketballIcon";
++import logoPrimary from "../assets/pnrbet-primary.png";
++import logoStacked from "../assets/pnrbet-stacked.png";
+ 
+ export default function Login() {
+   const [mode, setMode] = useState("login");
+@@ -68,12 +69,7 @@ export default function Login() {
+         />
+         <div className="absolute inset-0 bg-[#0A0A0A]/75" />
+         <div className="absolute inset-0 flex flex-col justify-between p-12 text-white">
+-          <div className="flex items-center gap-2">
+-            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#00D632]">
+-              <BasketballIcon className="h-5 w-5 text-[#0A0A0A]" strokeWidth={2.2} />
+-            </div>
+-            <span className="font-display text-xl font-extrabold tracking-tighter">PNRBET</span>
+-          </div>
++          <img src={logoPrimary} alt="PNRBET — Sports · Esports · Originals" className="h-12 w-auto" />
+           <div>
+             <h1 className="font-display text-5xl font-black leading-none tracking-tighter lg:text-6xl">
+               Predict.<br />Bet.<br />
+@@ -95,13 +91,8 @@ export default function Login() {
+           transition={{ duration: 0.4 }}
+           className="w-full max-w-sm text-white"
+         >
+-          <div className="mb-8 lg:hidden">
+-            <div className="flex items-center gap-2">
+-              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#00D632]">
+-                <BasketballIcon className="h-5 w-5 text-[#0A0A0A]" strokeWidth={2.2} />
+-              </div>
+-              <span className="font-display text-xl font-extrabold tracking-tighter">PNRBET</span>
+-            </div>
++          <div className="mb-8 flex justify-center lg:hidden">
++            <img src={logoStacked} alt="PNRBET" className="h-20 w-auto" />
+           </div>
+ 
+           <p className="mb-1 text-xs uppercase tracking-[0.2em] text-[#a1a1aa]">
+diff --git a/frontend/src/pages/ResetPassword.jsx b/frontend/src/pages/ResetPassword.jsx
+index 69576e8..0b57fe9 100644
+--- a/frontend/src/pages/ResetPassword.jsx
++++ b/frontend/src/pages/ResetPassword.jsx
+@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
+ import { Input } from "@/components/ui/input";
+ import { Label } from "@/components/ui/label";
+ import { toast } from "sonner";
+-import { BasketballIcon } from "@/components/BasketballIcon";
++import logoIcon from "../assets/pnrbet-icon.png";
+ 
+ export default function ResetPassword() {
+   const [params] = useSearchParams();
+@@ -38,9 +38,7 @@ export default function ResetPassword() {
+       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
+         className="relative z-10 w-full max-w-sm rounded-2xl border border-white/10 bg-white p-8">
+         <div className="mb-6 flex items-center gap-2">
+-          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#00D632]">
+-            <BasketballIcon className="h-5 w-5 text-[#0A0A0A]" strokeWidth={2.2} />
+-          </div>
++          <img src={logoIcon} alt="" className="h-9 w-9 rounded-md" />
+           <span className="font-display text-xl font-extrabold tracking-tighter">PNRBET</span>
+         </div>
+ 
+diff --git a/frontend/src/pages/SweepsRules.jsx b/frontend/src/pages/SweepsRules.jsx
+index cf16de2..ff31c7e 100644
+--- a/frontend/src/pages/SweepsRules.jsx
++++ b/frontend/src/pages/SweepsRules.jsx
+@@ -1,6 +1,6 @@
+ import React from "react";
+ import { Link } from "react-router-dom";
+-import { BasketballIcon } from "@/components/BasketballIcon";
++import logoIcon from "../assets/pnrbet-icon.png";
+ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+ 
+ const EXCLUDED = ["New Jersey", "New York", "Arizona", "Michigan", "Idaho", "Louisiana", "Montana", "Connecticut", "Maryland", "Nevada"];
+@@ -154,9 +154,7 @@ export default function SweepsRules() {
+       <header className="border-b border-[#E5E7EB]">
+         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
+           <Link to="/" className="flex items-center gap-2" data-testid="sweeps-home-link">
+-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#00D632]">
+-              <BasketballIcon className="h-4 w-4 text-[#0A0A0A]" strokeWidth={2.2} />
+-            </div>
++            <img src={logoIcon} alt="" className="h-8 w-8 rounded-md" />
+             <span className="font-display text-lg font-extrabold tracking-tighter">PNRBET</span>
+           </Link>
+           <div className="flex items-center gap-4">
+diff --git a/frontend/src/pages/Terms.jsx b/frontend/src/pages/Terms.jsx
+index 950187c..d46ca1a 100644
+--- a/frontend/src/pages/Terms.jsx
++++ b/frontend/src/pages/Terms.jsx
+@@ -1,6 +1,6 @@
+ import React from "react";
+ import { Link } from "react-router-dom";
+-import { BasketballIcon } from "@/components/BasketballIcon";
++import logoIcon from "../assets/pnrbet-icon.png";
+ import { ShieldAlert } from "lucide-react";
+ 
+ const EXCLUDED = ["New Jersey", "New York", "Arizona", "Michigan", "Idaho", "Louisiana", "Montana", "Connecticut", "Maryland", "Nevada"];
+@@ -24,9 +24,7 @@ export default function Terms() {
+       <header className="border-b border-[#E5E7EB]">
+         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
+           <Link to="/" className="flex items-center gap-2" data-testid="tos-home-link">
+-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#00D632]">
+-              <BasketballIcon className="h-4 w-4 text-[#0A0A0A]" strokeWidth={2.2} />
+-            </div>
++            <img src={logoIcon} alt="" className="h-8 w-8 rounded-md" />
+             <span className="font-display text-lg font-extrabold tracking-tighter">PNRBET</span>
+           </Link>
+           <div className="flex items-center gap-4">
